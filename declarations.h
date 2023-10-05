@@ -1,0 +1,1 @@
+void send_boundary(const int N, const int count, const int bnum, const double *localrho, double *leftboundary, double *rightboundary);
