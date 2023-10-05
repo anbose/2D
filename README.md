@@ -10,7 +10,7 @@ Aritra Bose
 
 We use a local Lax-Wendorf method to formulate a setup for the simulation. This setup is inspired from these two papers : https://epubs.siam.org/doi/10.1137/110853807 and https://epubs.siam.org/doi/10.1137/060673308. A version of this code, written in Julia, was used to simulate the same system in 1D for the paper https://iopscience.iop.org/article/10.1209/0295-5075/acdcb7/meta.
 
-The directory contains the necessary files needed for the simulation. However, the file including functions (funcs.h) could not be shared due to privacy measures. Interested people can contact me (anb7101@gmail.com).
+The directory contains the necessary files needed for the simulation. However, the file including functions (funcs.h) could not be shared due to privacy measures. Interested people can contact me.
 
 ## Contributing
 
