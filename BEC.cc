@@ -96,10 +96,6 @@ int main(int argc, char* argv[]){
     MPI_Scatterv(force_y,counts,dspls,MPI_DOUBLE,force_yl,counts[myid],MPI_DOUBLE,0,MPI_COMM_WORLD);
     MPI_Barrier(MPI_COMM_WORLD);
 
-    ////////////////////////////////////////////////////// Distribute boundaries //////////////////////////////////////////////////////
-
-    //send_boundary(N,counts[myid],localrho,leftboundary,rightboundary);
-
     ////////////////////////////////////////////////////// Update local rho //////////////////////////////////////////////////////
 
     int neg_events = 0;
@@ -112,10 +108,6 @@ int main(int argc, char* argv[]){
 
         send_boundary(N,counts[myid],2,localrho,leftboundary,rightboundary);
 
-        /*if(t==1 && myid==0){
-            printf("time %f : density at some point : %f \n", 0.0, rho[10]);
-        }*/
-
         MPI_Barrier(MPI_COMM_WORLD);
         update_local_density(N,firstindex,localrho,leftboundary,rightboundary,force_xl,force_yl,Parameters);
 
@@ -126,13 +118,8 @@ int main(int argc, char* argv[]){
         MPI_Allreduce(&cpt_neg,&global_neg,1,MPI_C_BOOL,MPI_LOR,MPI_COMM_WORLD);
 
         if(global_neg){
-            double local_sum = total_mass(counts[myid],rho,Parameters);
-            MPI_Barrier(MPI_COMM_WORLD);
-            MPI_Allreduce(&local_sum,&global_sum,1,MPI_DOUBLE,MPI_SUM,MPI_COMM_WORLD);
             normalize_rho(counts[myid],global_sum,localrho,Parameters);
             neg_events += 1;
-            //if(myid==0)
-                //cout << "neg event found!" << endl;
         }
 
         MPI_Barrier(MPI_COMM_WORLD); 
@@ -144,7 +131,6 @@ int main(int argc, char* argv[]){
             global_sum = total_mass(N*N,rho,Parameters);
             if(myid==0){
                 printf("global sum is %f\n",global_sum);
-                //printf("time %f : density at some point : %f \n", phys_time, localrho[10]);
             }
         }
     }
@@ -163,19 +149,6 @@ int main(int argc, char* argv[]){
         printf("negative density events : %f times of total run \n",(double)neg_events/Nits);
         save_rho("rho_final.bin",N,rho);
     }
-    /*if(myid==1){
-        printf("left vector for process %d is : \n", myid);
-        for(int i=0;i<N;i++){
-            printf("index %d : %f \n",i,localrho[i]);
-        }
-    }
-    MPI_Barrier(MPI_COMM_WORLD);
-    if(myid==0){
-        printf("right vector for process %d is : \n", myid);
-        for(int i=0;i<N;i++){
-            printf("index %d : %f \n",i,rightboundary[i]);
-        }
-    }*/
 
     delete[] rho; delete[] localrho;
     delete[] leftboundary; delete[] rightboundary;
