@@ -1,6 +1,6 @@
 # Description
 
-This is a code for simulation the diffusivity edge system as described in https://journals.aps.org/pre/abstract/10.1103/PhysRevE.100.010601 in 2-dimensional grid.
+This is a code in C++ for simulation the diffusivity edge system as described in https://journals.aps.org/pre/abstract/10.1103/PhysRevE.100.010601 in 2-dimensional grid.
 
 ## Author
 
